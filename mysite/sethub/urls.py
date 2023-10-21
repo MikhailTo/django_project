@@ -9,6 +9,7 @@ app_name = "sethub"
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("about/", views.about, name="about"),
     path("catalog/<int:cat_id>/", views.catalog, name="catalog"),
     path("catalog/<slug:cat_slug>/", views.catalog_by_slug, name="catalog_by_slug"),
     path("archive/<year4:year>/", views.archive, name="archive"),
