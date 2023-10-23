@@ -1,34 +1,48 @@
-from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.template.loader import render_to_string
+from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import render
 
+nav = [
+    {'name': 'Главная', 'url': 'index'},
+    {'name': 'Контакты', 'url': 'contact'},
+    {'name': 'О нас', 'url': 'about'},
+    {'name': 'Логин', 'url': 'login'},
+    {'name': 'Добавить пост', 'url': 'add'},
+]
+
+data_db = [
+    {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_published': True},
+    {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_published': False},
+    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулия Робертс', 'is_published': True},
+]
 
 def index(request):
-    #t = render_to_string('sethub/index.html')
-    #return HttpResponse(t)
-    return render(request, 'sethub/index.html')
+    data = {
+        'title': 'Главная страница',
+        'nav': nav,
+        'posts': data_db,
+    }
+
+    return render(request, 'sethub/index.html', context=data)
 
 
 def about(request):
-    return render(request, 'sethub/about.html')
+    return render(request, 'sethub/about.html', { 'title': 'О нас', 'nav': nav })
 
 
-def catalog(request, cat_id):
-    return HttpResponse(f"<h1>Каталог {cat_id}</h1>")
+def contact(request):
+    return render(request, 'sethub/contact.html', { 'title': 'Контакты', 'nav': nav })
 
 
-def catalog_by_slug(request, cat_slug):
-    if request.GET:
-        for key, value in zip(request.GET.keys(), request.GET.values()):
-            print(key, '=', value, end='|')
-    return HttpResponse(f"<h1>Каталог {cat_slug}</h1>")
+def login(request):
+    return render(request, 'sethub/login.html', { 'title': 'Логин', 'nav': nav })
 
 
-def archive(request, year):
-    if year not in range(1990, 2023):
-        raise Http404()
-    return HttpResponse(f"<h1>Архив по годам: {year}</h1>")
+def add_post(request):
+    return render(request, 'sethub/add.html', { 'title': 'Добавить пост', 'nav': nav })
+
+
+def show_post(request, post_id):
+    return HttpResponse(f"<p>Отображение статьи (id={post_id})")
 
 
 def page_not_found(request, exception):

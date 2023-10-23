@@ -1,16 +1,12 @@
 
-from django.urls import path, register_converter
+from django.urls import path
 from . import views
-from . import converters
-
-register_converter(converters.FourDigitYearConverter, "year4")
-
-app_name = "sethub"
 
 urlpatterns = [
     path("", views.index, name="index"),
     path("about/", views.about, name="about"),
-    path("catalog/<int:cat_id>/", views.catalog, name="catalog"),
-    path("catalog/<slug:cat_slug>/", views.catalog_by_slug, name="catalog_by_slug"),
-    path("archive/<year4:year>/", views.archive, name="archive"),
+    path("post/<int:post_id>/", views.show_post, name="post"),
+    path("add/", views.add_post, name="add"),
+    path("login/", views.login, name="login"),
+    path("contact/", views.contact, name="contact")
 ]
