@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     {% load static %}
+    {% load sethub_tags %}
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'sethub/css/style.css' %}">
     <title>{{ title }}</title>
@@ -11,6 +12,14 @@
     {% include 'sethub/includes/nav.html' %}
 </header>
 <main class="content">
+    <ul>
+        {% get_categories as categories %}
+        {% for category in categories %}
+        <li><a href="{% url 'category' category.id %}">{{category.name}}</a></li>
+        {% endfor %}
+
+    </ul>
+
     {% block content %} {% endblock %}
 </main>
 </body>
