@@ -50,55 +50,24 @@ and download drives in db
 16. create superuser
 python3 manage.py createsuperuser
 
-manage.py:
-Available subcommands:
+models.py:
+class Sethub(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField(blank=True)
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=True)
 
-[auth]
-    changepassword
-    createsuperuser
+Создать:
+	python3 manage.py makemigrations
+Смотреть:
+	python3 manage.py sqlmigrate sethub 0001
+Выполнить:
+	python3 manage.py migrate
 
-[contenttypes]
-    remove_stale_contenttypes
-
-[django]
-    check
-    compilemessages
-    createcachetable
-    dbshell
-    diffsettings
-    dumpdata
-    flush
-    inspectdb
-    loaddata
-    makemessages
-    makemigrations
-    migrate
-    optimizemigration
-    sendtestemail
-    shell
-    showmigrations
-    sqlflush
-    sqlmigrate
-    sqlsequencereset
-    squashmigrations
-    startapp
-    startproject
-    test
-    testserver
-
-[sessions]
-    clearsessions
-
-[staticfiles]
-    collectstatic
-    findstatic
-    runserver
-
-startapp:
-init - пайтон пакет
-admin - что отображать в админке
-apps - содержит конфиг
-models - модели
-tests - тесты
-views - запросы
-migrations - 
+Добавить запись:
+	python3 manage.py shell
+>>> from sethub.models import Sethub
+>>> Sethub(title='Рецепты', content='Различные рецепты для приготовление блюд')
+>>> s1 = _
+>>> s1.save()
