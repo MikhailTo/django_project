@@ -1,5 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+
+from .models import Sethub
 
 nav = [
     {'name': 'Главная', 'url': 'index'},
@@ -22,10 +24,11 @@ cats_db = [
 ]
 
 def index(request):
+    posts = Sethub.objects.filter(is_published=1)
     data = {
         'title': 'Главная страница',
         'nav': nav,
-        'posts': data_db,
+        'posts': posts,
     }
 
     return render(request, 'sethub/index.html', context=data)
@@ -47,8 +50,15 @@ def add_post(request):
     return render(request, 'sethub/add.html', { 'title': 'Добавить пост', 'nav': nav })
 
 
-def show_post(request, post_id):
-    return HttpResponse(f"<p>Отображение статьи (id={post_id})")
+def show_post(request, post_slug):
+    post = get_object_or_404(Sethub, slug=post_slug)
+    data = {
+        'title': post.title,
+        'nav': nav,
+        'post': post,
+        'cat_selected': 1,
+    }
+    return render(request, 'sethub/post.html', data)
 
 
 def show_category(request, category_id):

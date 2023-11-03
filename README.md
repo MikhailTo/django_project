@@ -71,3 +71,6 @@ class Sethub(models.Model):
 >>> Sethub(title='Рецепты', content='Различные рецепты для приготовление блюд')
 >>> s1 = _
 >>> s1.save()
+
+After install IPython and Django_extensions:
+python manage.py shell_plus --print-sql
